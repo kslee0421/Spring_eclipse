@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이메일 발송 시스템</title>
+</head>
+<body>
+	
+	<form id="f" method="post" action="./spring4ok.do">
+	고객명 : <input type="text" name="ename" required></input><br> 
+	받는메일 : <input type="text" name="email" required></input><br>
+	제목 : <input type="text" name="etitle" required></input><br>
+	내용 : <input type="text" name="econ" required></input>
+	<input type="submit" value="전송" >
+	</form>
+</body>
+</html>
+<script>
+
+	function abc(){
+		f.submit();
+	}
+	
+	var aj = new XMLHttpRequest();
+	aj.onreadystatechange =function(){
+		console.log(aj.readyState);
+				/*
+		0 : 요청에 대한 초기화가 오류
+		1 : 서버에 연결함
+		2 : 서버에 파일을 요청 받음
+		3 : 요청을 처리중
+		4 : 요청에 대한 데이터 처리 완료
+		*/
+		if(aj.readyState==4){
+				//var msg = JSON.parse(this.response);
+				//console.log(this.response);
+			if(aj.status==200){
+				var msg =this.response;
+				if(msg =="error"){
+					alert("서버접근에 문제가 발생함")
+				}
+				else if(msg=="key_error"){
+					alert("보안 키가 오류 발생했습니다")
+				}
+				else{
+					//console.log(msg)
+					//console.log(all_list);
+					var all_list = JSON.parse(msg);
+					var html = document.getElementById("datalist");
+					all_list["backend"].forEach(function(a,b){
+						html.innerHTML += `<tr>
+						<td>`+a["kslee01"]+`</td>
+						<td>`+a["kslee02"]+`</td>
+						<td>`+a["kslee03"]+`</td>
+						<td>`+a["kslee04"]+`</td>
+						<tr>
+						`;
+					});
+				}	
+			}
+			else{
+				console.log("통신오류 발생!!");
+			}
+		}
+	}
+	aj.open("GET","http://192.168.110.217:8080/spring_test1/job_data.do?key=yumi")
+	aj.send()
+</script>

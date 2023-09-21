@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace : 그룹명
+namespace안에 id는 절대 중복 되어서는 안됨
+ -->
+<mapper namespace="reviewDB">
+<!-- 
+${} : 필드명, 테이블
+#{} : 값 rname="홍길동";
+parameterType : string, int , double, long ...
+resultType :select문에만 사용합니다. int Integer String ,dto vo ,map
+ -->
+<select id="counting" parameterType="string" resultType="Datavo">
+select count(*) as cnt from review order by ridx desc
+</select>
+
+<select id="selectall" parameterType="string" resultType="Datavo">
+select * from review order by ridx desc
+</select>
+<!-- db에 컬럼명과 vo명이 같으므로 바로 입력이 가능함 -->
+<insert id="review_insert">
+insert into review values ('0',#{rname},#{rpass},#{rtext},now())
+</insert>
+</mapper>
