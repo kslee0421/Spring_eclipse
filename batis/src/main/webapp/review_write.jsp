@@ -7,7 +7,7 @@
 <title>상품 리뷰 간편 등록 페이지</title>
 </head>
 <body>
-<form id="f" mrthod="post" action="./data_insert.do">
+<form id="f" method="post" action="./data_insert.do">
 고객명: <input type="text" name="rname"><br>
 패스워드: <input type="password" name="rpass"><br>
 리뷰내용: <textarea cols="200" rows="4" name="rtext"></textarea><br>
