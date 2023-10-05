@@ -115,6 +115,13 @@
 		    <version>5.3.30</version>
 		</dependency>
 
+	<!-- commons-net : CDN서버-->
+	<dependency>
+	    <groupId>commons-net</groupId>
+	    <artifactId>commons-net</artifactId>
+	    <version>3.6</version>
+	</dependency>
+
 		
 	</dependencies>  
 	

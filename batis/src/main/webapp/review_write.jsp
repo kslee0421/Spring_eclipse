@@ -8,17 +8,16 @@
 </head>
 <body>
 <form id="f" method="post" action="./data_insert.do">
-고객명: <input type="text" name="rname"><br>
-패스워드: <input type="password" name="rpass"><br>
-리뷰내용: <textarea cols="200" rows="4" name="rtext"></textarea><br>
+고객명 : <input type="text" name="rname"><br>
+패스워드 : <input type="password" name="rpass"><br>
+리뷰내용 : <textarea cols="200" rows="4" name="rtext"></textarea><br>
 <input type="submit" value="리뷰등록">
 </form>
 </body>
-
 <script>
-document.querySelector("f").addEventListener("submit",function(s){
+document.querySelector("#f").addEventListener("submit",function(s){
 	s.preventDefault();
-	if(f.rpass.value==""){
+	if(f.rpass.value == ""){
 		alert("패스워드를 입력하세요");
 	}
 	else{

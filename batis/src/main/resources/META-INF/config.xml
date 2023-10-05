@@ -3,5 +3,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Datavo" type="batis.datavo"/>
+		<typeAlias alias="Filevo" type="batis.filevo"/>
 	</typeAliases>
 </configuration>

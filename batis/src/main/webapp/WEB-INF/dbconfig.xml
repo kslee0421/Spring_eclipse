@@ -13,26 +13,33 @@
 	
 	<!-- SQL정보 파트 -->
 	<context:annotation-config/>
-	<bean id ="datasource" class="org.apache.commons.dbcp.BasicDataSource">
-	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-	<property name="url" value="jdbc:mysql://umj7-003.cafe24.com/primewom137"></property>
-	<property name="username" value="primewom137"></property>
-	<property name="password" value="acts32dim!!"></property>
+	<bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://umj7-003.cafe24.com/primewom137"></property>
+		<property name="username" value="primewom137"></property>
+		<property name="password" value="acts32dim!!"></property>
 	</bean>
-	<!-- SQL 문법 로드 파트 
-	config.xml : java class를 로드하여 xml에서 사용할 수 있도록 하는 역할
-	mapper.xml : select, update,insert,delete, creat,alter
+	
+	<!-- SQL 문법 로드 파트 >>
+		config.xml : java class를 로드하여 xm에서 사용할 수 있도록 하는 역할
+		mapper.xml : select,insert,delete,update,create,alter
 	-->
- 	<bean id="sqlsessionfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
- 		<property name="dataSource" ref="datasource"></property> <!-- 위에잇는 아이디 가지고 옴 -->
- 		<property name="configLocation" value="classpath:/META-INF/config.xml"/>
- 		<property name="mapperLocations" value="classpath:/META-INF/mapper.xml"/>
- 		
+	<bean id="sqlsessionfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"/>
+		<property name="configLocation" value="classpath:/META-INF/config.xml"/>
+		<property name="mapperLocations" value="classpath:/META-INF/mapper.xml"/>
 	</bean>
-	<!-- SQL Template java(핸들링(Module) 
-	sqlSessionFactory : xml에 사용된 sql 문법을실제 데이터 베이스에 적용 preparedstatement 대신
-	-->
+		
+	<!-- SQL Template java(핸들링(Module) >>
+		SqlSessionFactory : xml에 사용된 sql 문법을 실제 데이터 베이스에 적용
+	 -->
 	<bean id="sqlsession" class="org.mybatis.spring.SqlSessionTemplate">
-	<constructor-arg name="sqlSessionFactory" ref="sqlsessionfactory"/>
+		<constructor-arg name="sqlSessionFactory" ref="sqlsessionfactory"></constructor-arg>
 	</bean>
+		
 </beans>
+
+
+
+
+

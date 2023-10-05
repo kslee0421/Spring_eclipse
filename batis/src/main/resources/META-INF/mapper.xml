@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace : 그룹명
-namespace안에 id는 절대 중복 되어서는 안됨
+<!-- 
+namespace : 그룹명 ( 중요 : namespace안에 있는 id는 절대 중복되어서는 안됌)
  -->
 <mapper namespace="reviewDB">
 <!-- 
 ${} : 필드명, 테이블
-#{} : 값 rname="홍길동";
-parameterType : string, int , double, long ...
-resultType :select문에만 사용합니다. int Integer String ,dto vo ,map
-limit 사용시 parameterType int 이용해서 사용해야함
+#{} : 값,  rname="홍길동";
+parameterType : String, int, double, long..... (받을때 타입) - 숫자를 받아올때 스트링으로 넣으면 "0"로 입력됌 문자 빼기 문자 할순 없음
+resultType : select문에만 사용합니다. int, Integer, dto, vo, map (보낼때 클래스 명)
  -->
+	<select id="selectall" resultType="Datavo" parameterType="int">
+		select * from review order by ridx desc limit #{z},5
+	</select>
+	
+	<!-- 
+	내용 검색
+	mysql : rtext like concat('%',#{value},'%')
+	oracle : rtext like '%' || #{value} || '%'
+	mssql : rtext like '%' + #{value} + '%'
+	 -->
+	<select id="selectsearch" resultType="Datavo" parameterType="string">
+		select * from review where rtext like concat('%',#{value},'%') order by ridx desc
+	</select>
 
-<select id="selectall" parameterType="int" resultType="Datavo">
-select * from review order by ridx desc limit #{z},2
-</select>
-<!--내용검색 
-mysql : concat
-oracle : like '%' || #{value} || '%'
-mssql : rtext like '%' + #{value} + '%'
--->
-<select id="selectsearch" parameterType="String" resultType="Datavo">
-select * from review where rtext like concat('%',#{value},'%') order by ridx desc
-</select>
+ 	<select id="counting" resultType="String" parameterType="string">
+		select count(*) as cnt from review order by ridx desc
+	</select>
+ 	
+ 	<select id="selectone" resultType="Datavo" parameterType="String">
+ 		select * from review where ridx = #{abc}
+ 	</select>
+ 	
+	<!-- db에 컬럼명과 vo명이 같으므로 바로 입력이 가능함 -->
+	<insert id="review_insert">
+		insert into review values ('0',#{rname},#{rpass},#{rtext},now())
+	</insert>
 
-<select id="counting" parameterType="String" resultType="String">
-select count(*) as cnt from review order by ridx desc
-</select>
-
-<select id="countingsearch" parameterType="String" resultType="String">
-select count(*) as cntsearch from review where rtext like concat('%',#{value},'%') order by ridx desc
-</select>
-
-<select id="selectone" parameterType="string" resultType="Datavo">
-select * from review where ridx=#{ridx} <!-- #{abdfdsfs } 아무이름 넣어도 됨-->
-</select>
-
-<!-- db에 컬럼명과 vo명이 같으므로 바로 입력이 가능함 -->
-<insert id="review_insert">
-insert into review values ('0',#{rname},#{rpass},#{rtext},now())
-</insert>
-
-<!-- 삭제시 해당 컬럼명을 이용하여 사용함 dto,vo를 사용하지 않음 -->
-<delete id="review_delete">
-delete from review where ridx = #{value}; <!-- value 아무거나 쓰면됨 #{aaaa}도 됨 -->
-</delete>
-
-<update id="review_update">
-update review set rtext=#{rtext}, rindate = now() where ridx=#{ridx} <!-- vo에서 넘어와야 하므로 #{ridx}와같이 필드명을 써야함 -->
-</update>
-
+	<!-- 삭제시 해당 컬럼명을 이용하여 사용함 dto,vo를 사용하지 않음 -->
+	<delete id="review_delete">
+		delete from review where ridx = #{aaa}
+	</delete>
+	
+	<update id="review_update">
+		update review set rtext = #{rtext}, rindate = now() where ridx = #{ridx}
+	</update>
+	
+	
+	<!-- 파일 저장 -->
+	<insert id="file_upload">
+		insert into files values ('0',#{fname})
+	</insert>
+	
+	<!-- 파일 리스트 -->
+	<select id="file_select" parameterType="string" resultType="Filevo">
+		select * from files order by fidx desc
+	</select>
 </mapper>

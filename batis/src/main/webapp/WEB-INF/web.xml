@@ -10,6 +10,7 @@
   		<param-value>
   		/WEB-INF/webpage.xml
   		/WEB-INF/dbconfig.xml
+  		/WEB-INF/dbconfig2.xml
   		</param-value>
   	</init-param>
   	<load-on-startup>1</load-on-startup>
